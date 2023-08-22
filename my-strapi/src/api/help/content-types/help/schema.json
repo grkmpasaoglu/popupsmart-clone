@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "helps",
+  "info": {
+    "singularName": "help",
+    "pluralName": "helps",
+    "displayName": "Helps",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "helpTitle": {
+      "type": "string"
+    },
+    "helpDesc": {
+      "type": "string"
+    },
+    "HowPopupsmartWorks": {
+      "type": "richtext"
+    },
+    "help_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::help-detail.help-detail",
+      "mappedBy": "help"
+    }
+  }
+}

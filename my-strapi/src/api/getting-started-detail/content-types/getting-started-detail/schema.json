@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "getting_started_details",
+  "info": {
+    "singularName": "getting-started-detail",
+    "pluralName": "getting-started-details",
+    "displayName": "GettingStartedDetail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gsTitle": {
+      "type": "string"
+    },
+    "getting_started": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::getting-started.getting-started",
+      "inversedBy": "getting_started_details"
+    },
+    "gsContent": {
+      "type": "richtext"
+    }
+  }
+}

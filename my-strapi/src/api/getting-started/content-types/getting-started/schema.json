@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "getting_starteds",
+  "info": {
+    "singularName": "getting-started",
+    "pluralName": "getting-starteds",
+    "displayName": "Getting Started",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gsTitle": {
+      "type": "string"
+    },
+    "gsContent": {
+      "type": "string"
+    },
+    "getting_started_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::getting-started-detail.getting-started-detail",
+      "mappedBy": "getting_started"
+    }
+  }
+}
