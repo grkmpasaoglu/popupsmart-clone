@@ -56,6 +56,32 @@ export default async function Home() {
               </div>
             ))}
           </div>
+          <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
+            <div className="text-5xl font-bold mb-12">Account</div>
+            {helpData.map((help: HelpData) => (
+              <div key={help.id}>
+                {help.attributes.help_details.data.map((item: HelpDetail) => (
+                  <Link href={`/account/${item?.id}`} key={item?.id}>
+                    <ReactMarkdown
+                      className="mb-2 text-md font-medium"
+                      key={item.id}
+                    >
+                      {item.attributes.DetailTitle}
+                    </ReactMarkdown>
+                  </Link>
+                ))}
+              </div>
+            ))}
+            <div className="mt-10">
+              <Link
+                href={"#"}
+                className="border border-black px-2 py-3 text-lg font-medium rounded-lg hover:bg-gray-800 hover:text-white transition duration-00"
+              >
+                Still Stuck ?
+              </Link>
+              <p className="text-lg font-medium mt-6">We’d love to help you.</p>
+            </div>
+          </div>
         </div>
       </div>
     </main>

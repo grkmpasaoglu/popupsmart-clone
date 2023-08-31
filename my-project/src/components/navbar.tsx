@@ -29,6 +29,12 @@ const Navbar = () => {
         >
           Sign In
         </a> */}
+         <a
+          href="/"
+          className="text-slate-900 ml-6 hover:text-blue-500"
+        >
+          Home
+        </a>
         <a
           href="/help"
           className="text-slate-900 ml-6 hover:text-blue-500"

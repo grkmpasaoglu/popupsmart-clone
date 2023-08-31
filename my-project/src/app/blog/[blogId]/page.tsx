@@ -3,6 +3,7 @@ import Sidebar from "@/components/sidebar";
 import ReactMarkdown from "react-markdown";
 import "@/app/blog/blog.css";
 import type { Metadata, ResolvingMetadata } from "next";
+import Link from "next/link";
 
 type Props = {
   params: { blogId: string };
@@ -37,18 +38,18 @@ export default async function ({ params }: { params: { blogId: string } }) {
       <div className="container mx-auto max-w-screen-xl">
         <div className="flex flex-col mb-10  md:flex-row md:justify-between md:items-center">
           <div className="md:ml-64">
-            <a
-              href="https://popupsmart.com/"
+            <Link
+              href="/"
               className="text-xs text-gray-500 mr-5 hover:underline"
             >
               Popupsmart
-            </a>
-            <a
-              href="https://popupsmart.com/blog/"
+            </Link>
+            <Link
+              href="/blog"
               className="text-xs text-gray-500 mr-5 hover:underline"
             >
               Blog
-            </a>
+            </Link>
             <a className="text-xs text-gray-600 font-bold">
               {title}
             </a>
