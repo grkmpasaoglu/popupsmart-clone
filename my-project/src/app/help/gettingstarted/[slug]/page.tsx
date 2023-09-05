@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/gettingstarted/gettingstarted.css";
+import "@/app/help/gettingstarted/gettingstarted.scss";
 
 type GettingStartedDetail = {
   id: number;
@@ -33,7 +33,7 @@ type Props = {
 export default async function Home({
   params,
 }: {
-  params: { gettingstartedId: string };
+  params: { slug: string };
 }) {
   const res = await fetch(
     `http://127.0.0.1:1337/api/getting-starteds?populate=*`
@@ -42,7 +42,7 @@ export default async function Home({
   const gettingStartedData = jsonres.data;
 
   const gsdata = await fetch(
-    `http://127.0.0.1:1337/api/getting-started-details/${params.gettingstartedId}`
+    `http://127.0.0.1:1337/api/getting-started-details/${params.slug}`
   );
   const jsongs = await gsdata.json();
   const gstitle = jsongs.data.attributes.gsTitle;
@@ -62,7 +62,7 @@ export default async function Home({
               <div key={gettingStarted.id}>
                 {gettingStarted.attributes.getting_started_details.data.map(
                   (item: GettingStartedDetail) => (
-                    <Link href={`/gettingstarted/${item?.id}`} key={item?.id}>
+                    <Link href={`/help/gettingstarted/${item?.id}`} key={item?.id}>
                       <ReactMarkdown
                         className="mb-2 text-md font-medium"
                         key={item.id}

@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/account/account.css";
+import "@/app/help/account/account.scss";
 
 type HelpDetail = {
   id: number;
@@ -30,17 +30,16 @@ type ApiResult = {
 export default async function Home({
   params,
 }: {
-  params: { accountId: string };
+  params: { slug: string };
 }) {
+  
   const res = await fetch(`http://127.0.0.1:1337/api/accounts?populate=*`);
   const jsonres: ApiResult = await res.json();
   const helpData = jsonres.data;
-  console.log(helpData);
   const accdata = await fetch(
-    `http://127.0.0.1:1337/api/help-details/${params.accountId}`
+    `http://127.0.0.1:1337/api/help-details/${params.slug}`
   );
   const jsonacc = await accdata.json();
-  console.log(jsonacc);
   const accTitle = jsonacc.data.attributes.DetailTitle;
   const accContent = jsonacc.data.attributes.DetailContent;
 
@@ -57,7 +56,7 @@ export default async function Home({
             {helpData.map((help: HelpData) => (
               <div key={help.id}>
                 {help.attributes.help_details.data.map((item: HelpDetail) => (
-                  <Link href={`/account/${item?.id}`} key={item?.id}>
+                  <Link href={`/help/account/${item?.id}`} key={item?.id}>
                     <ReactMarkdown
                       className="mb-2 text-md font-medium"
                       key={item.id}

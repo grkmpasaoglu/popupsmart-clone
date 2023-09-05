@@ -29,6 +29,9 @@
       "relation": "manyToOne",
       "target": "api::account.account",
       "inversedBy": "help_details"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

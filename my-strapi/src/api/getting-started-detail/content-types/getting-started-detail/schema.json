@@ -23,6 +23,9 @@
     },
     "gsContent": {
       "type": "richtext"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

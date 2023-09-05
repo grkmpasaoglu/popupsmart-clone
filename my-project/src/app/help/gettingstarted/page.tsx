@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/blog/blog.css";
+import "@/app/help/gettingstarted/gettingstarted.scss";
 
 type GettingStartedDetail = {
   id: number;
@@ -27,11 +27,12 @@ type ApiResult = {
 };
 
 export default async function Home() {
-  const res = await fetch(
+  const res = await   fetch(
     `http://127.0.0.1:1337/api/getting-starteds?populate=*`
   );
   const jsonres: ApiResult = await res.json();
   const gettingStartedData = jsonres.data;
+  //console.log(gettingStartedData[0].attributes.getting_started_details.data)
 
   return (
     <main>
@@ -40,7 +41,7 @@ export default async function Home() {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/5 ml-4 md:ml-20 mt-4">
             <div className="font-bold text-xl mb-5">
-              <Link className="text-2xl font-bold" href="help">
+              <Link className="text-2xl font-bold" href="/help">
                 Categories
               </Link>
             </div>
@@ -49,7 +50,7 @@ export default async function Home() {
               <div key={gettingStarted.id}>
                 {gettingStarted.attributes.getting_started_details.data.map(
                   (item: GettingStartedDetail) => (
-                    <Link href={`/gettingstarted/${item?.id}`} key={item?.id}>
+                    <Link href={`/help/gettingstarted/${item?.id}`} key={item?.id}>
                       <ReactMarkdown
                         className="mb-2 text-md font-medium"
                         key={item.id}
@@ -68,7 +69,7 @@ export default async function Home() {
               <div key={gettingStarted.id}>
                 {gettingStarted.attributes.getting_started_details.data.map(
                   (item: GettingStartedDetail) => (
-                    <Link href={`/gettingstarted/${item?.id}`} key={item?.id}>
+                    <Link href={`/help/gettingstarted/${item?.id}`} key={item?.id}>
                       <ReactMarkdown
                         className="mb-2 text-md font-medium"
                         key={item.id}

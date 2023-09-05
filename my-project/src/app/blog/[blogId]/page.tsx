@@ -1,7 +1,6 @@
 import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
 import ReactMarkdown from "react-markdown";
-import "@/app/blog/blog.css";
+import "@/app/blog/blog.scss";
 import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 
@@ -24,17 +23,16 @@ export async function generateMetadata(
   };
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async function ({ params }: { params: { blogId: string } }) {
   const res = await fetch(`http://127.0.0.1:1337/api/blogs/${params.blogId}`);
   const jsonres = await res.json();
   const title = jsonres.data.attributes.title;
   const body = jsonres.data.attributes.body;
-  console.log(jsonres)
 
   return (
     <main>
       <Navbar />
-      <Sidebar />
       <div className="container mx-auto max-w-screen-xl">
         <div className="flex flex-col mb-10  md:flex-row md:justify-between md:items-center">
           <div className="md:ml-64">
