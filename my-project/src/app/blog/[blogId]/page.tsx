@@ -13,7 +13,7 @@ export async function generateMetadata(
   { params }: Props,
   parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  const res = await fetch(`http://localhost:1337/api/blogs/${params.blogId}`);
+  const res = await fetch(`http://127.0.0.1:1337/api/blogs/${params.blogId}`);
   const jsonres = await res.json();
   const title = jsonres.data.attributes.title;
   const body = jsonres.data.attributes.body;
@@ -25,7 +25,7 @@ export async function generateMetadata(
 }
 
 export default async function ({ params }: { params: { blogId: string } }) {
-  const res = await fetch(`http://localhost:1337/api/blogs/${params.blogId}`);
+  const res = await fetch(`http://127.0.0.1:1337/api/blogs/${params.blogId}`);
   const jsonres = await res.json();
   const title = jsonres.data.attributes.title;
   const body = jsonres.data.attributes.body;

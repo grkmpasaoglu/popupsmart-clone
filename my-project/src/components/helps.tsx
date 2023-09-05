@@ -1,25 +1,14 @@
 import react from "react";
 import Navbar from "./navbar";
 import Link from "next/link";
+import fetchData from "@/utils/fetchData";
 
 export default async function Help() {
-  //   const req = await fetch("http://127.0.0.1:1337/api/helps");
-  //   const jsonreq = await req.json();
-  //   console.log(jsonreq);
 
-  //   const detail = await fetch("http://127.0.0.1:1337/api/help-details")
-  //   const jsondetail = await detail.json();
-  //   const detailTitle = jsondetail.data[0].attributes.DetailTitle;
-  //   const datalength = jsondetail.data.length;
+  const account = await fetchData("/api/accounts?populate=*");
 
-  const acc = await fetch("http://127.0.0.1:1337/api/accounts?populate=*");
-  const jsonacc = await acc.json();
+  const gettingStarted = await fetchData("/api/getting-starteds?populate=*");
 
-  const gs = await fetch(
-    "http://127.0.0.1:1337/api/getting-starteds?populate=*"
-  );
-  const jsongs = await gs.json();
-  console.log("sa",jsongs.data);
 
   return (
     <main>
@@ -29,20 +18,20 @@ export default async function Help() {
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 text-black mt-5 justify-items-center max-w-5xl mx-auto ">
         <div>
-          {jsonacc.data.map((item: any) => (
+          {account.data.map((item: any) => (
             // <Link href={`/account/${item?.id}`} key={item?.id}>
-            <Link href="account">
+            <Link href="account" key={item.id}>
               <div className="bg-white h-80 w-80 text-center rounded-sm overflow-hidden drop-shadow-md transition duration-200 hover:shadow-xl hover:translate-y-[-2px] mt-3">
                 <div>
                   <div className="font-medium text-xl my-1 p-4 h-14">
-                    <h3>{jsonacc.data[0].attributes.accTitle}</h3>
+                    <h3>{account.data[0].attributes.accTitle}</h3>
                   </div>
                   <div className="p-4 h-32 text-sm">
-                    <p>{jsonacc.data[0].attributes.accDesc} </p>
+                    <p>{account.data[0].attributes.accDesc} </p>
                   </div>
                   <div className="border border-black px-10 py-3.5 inline-block rounded-full text-black transition duration-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white">
                     <p>
-                      {jsonacc.data[0].attributes.help_details.data.length}{" "}
+                      {account.data[0].attributes.help_details.data.length}{" "}
                       Articles
                     </p>
                   </div>
@@ -54,20 +43,20 @@ export default async function Help() {
 
 
         <div>
-          {jsongs.data.map((item: any) => (
+          {gettingStarted.data.map((item: any) => (
             // <Link href={`/help/${item?.id}`} key={item?.id}>
-            <Link href="gettingstarted">
+            <Link href="gettingstarted" key={item.id}>
               <div className="bg-white h-80 w-80 text-center rounded-sm overflow-hidden drop-shadow-md transition duration-200 hover:shadow-xl hover:translate-y-[-2px] mt-3">
                 <div>
                   <div className="font-medium text-xl my-1 p-4 h-14">
-                    <h3>{jsongs.data[0].attributes.gsTitle}</h3>
+                    <h3>{gettingStarted.data[0].attributes.gsTitle}</h3>
                   </div>
                   <div className="p-4 h-32 text-sm">
-                    <p>{jsongs.data[0].attributes.gsContent} </p>
+                    <p>{gettingStarted.data[0].attributes.gsContent} </p>
                   </div>
                   <div className="border border-black px-10 py-3.5 inline-block rounded-full text-black transition duration-300 hover:bg-blue-500 hover:border-blue-500 hover:text-white">
                     <p>
-                      {jsongs.data[0].attributes.getting_started_details.data.length} Articles
+                      {gettingStarted.data[0].attributes.getting_started_details.data.length} Articles
                     </p>
                   </div>
                 </div>

@@ -2,7 +2,7 @@ import react from "react";
 import Link from "next/link";
 
 export default async function Blog() {
-  const res = await fetch("http://localhost:1337/api/blogs");
+  const res = await fetch("http://127.0.0.1:1337/api/blogs");
   const jsonres = await res.json();
   console.log(jsonres);
   return (
