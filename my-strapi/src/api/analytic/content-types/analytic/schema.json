@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "analytics",
+  "info": {
+    "singularName": "analytic",
+    "pluralName": "analytics",
+    "displayName": "Analytics"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "analyticsTitle": {
+      "type": "string"
+    },
+    "analyticsContent": {
+      "type": "string"
+    },
+    "analytics_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::analytics-detail.analytics-detail",
+      "mappedBy": "analytics"
+    }
+  }
+}

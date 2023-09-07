@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "targetings",
+  "info": {
+    "singularName": "targeting",
+    "pluralName": "targetings",
+    "displayName": "targeting",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "targetingTitle": {
+      "type": "string"
+    },
+    "targetingContent": {
+      "type": "string"
+    },
+    "targeting_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::targeting-detail.targeting-detail",
+      "mappedBy": "targeting"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "analytics_details",
+  "info": {
+    "singularName": "analytics-detail",
+    "pluralName": "analytics-details",
+    "displayName": "Analytics Detail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "analyticsTitle": {
+      "type": "string"
+    },
+    "analyticsContent": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "analytics": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::analytic.analytic",
+      "inversedBy": "analytics_details"
+    }
+  }
+}

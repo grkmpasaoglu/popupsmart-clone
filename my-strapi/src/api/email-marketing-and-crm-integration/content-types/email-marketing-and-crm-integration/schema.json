@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_marketing_and_crm_integrations",
+  "info": {
+    "singularName": "email-marketing-and-crm-integration",
+    "pluralName": "email-marketing-and-crm-integrations",
+    "displayName": "Email Marketing and CRM Integration",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "EmailCRMTitle": {
+      "type": "string"
+    },
+    "EmailCRMContent": {
+      "type": "string"
+    },
+    "email_marketing_and_crm_integrations_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::email-marketing-and-crm-integrations-detail.email-marketing-and-crm-integrations-detail",
+      "mappedBy": "email_marketing_and_crm_integration"
+    }
+  }
+}

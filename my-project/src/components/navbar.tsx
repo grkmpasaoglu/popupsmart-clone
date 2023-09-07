@@ -4,10 +4,10 @@ import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between text-black p-4 mb-3 mt-2 w-9/12 mx-auto">
+    <nav className="flex items-center justify-between text-black p-4 mt-10 w-9/12 mx-auto">
       <div className="flex items-center">
         <a href="http://localhost:3000/">
-          <Image src={Logo} alt="Logo" className="h-12 w-12" />
+          <Image src={Logo} alt="Logo" className="h-16 w-16" />
         </a>
       </div>
       <div className="flex items-center font-semibold">
@@ -31,25 +31,25 @@ const Navbar = () => {
         </a> */}
          <a
           href="/"
-          className="text-slate-900 ml-6 hover:text-blue-500"
+          className="text-slate-900 ml-8 hover:text-blue-500"
         >
           Home
         </a>
         <a
           href="/help"
-          className="text-slate-900 ml-6 hover:text-blue-500"
+          className="text-slate-900 ml-8 hover:text-blue-500"
         >
           Help
         </a>
         <a
           href="/blog"
-          className="text-slate-900 ml-6 hover:text-blue-500"
+          className="text-slate-900 ml-8 hover:text-blue-500"
         >
           Blog
         </a>
         <a
           href="#"
-          className="border rounded-md px-5 py-2 ml-5 border-black font-semibold transition duration-300 hover:bg-black hover:text-white"
+          className="border rounded-md px-8 py-4 ml-14 border-black font-medium transition duration-300 hover:bg-black hover:text-white"
         >
           Get Started
         </a>

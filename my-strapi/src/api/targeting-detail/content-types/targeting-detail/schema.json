@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "targeting_details",
+  "info": {
+    "singularName": "targeting-detail",
+    "pluralName": "targeting-details",
+    "displayName": "Targeting Detail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "targetingTitle": {
+      "type": "string"
+    },
+    "targetingContent": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "targeting": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::targeting.targeting",
+      "inversedBy": "targeting_details"
+    }
+  }
+}

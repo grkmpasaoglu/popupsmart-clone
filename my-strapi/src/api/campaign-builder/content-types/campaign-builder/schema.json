@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "campaign_builders",
+  "info": {
+    "singularName": "campaign-builder",
+    "pluralName": "campaign-builders",
+    "displayName": "Campaign Builder",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "campaignBuilderTitle": {
+      "type": "string"
+    },
+    "campaign_builder_details": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::campaign-builder-detail.campaign-builder-detail",
+      "mappedBy": "campaign_builder"
+    },
+    "campaignBuilderContent": {
+      "type": "string"
+    }
+  }
+}
