@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "encyclopedias",
+  "info": {
+    "singularName": "encyclopedia",
+    "pluralName": "encyclopedias",
+    "displayName": "Encyclopedia",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "images": {
+      "type": "json"
+    }
+  }
+}

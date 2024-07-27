@@ -1,7 +1,28 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/help/gettingstarted/gettingstarted.scss";
+import "@/app/help/help.scss"
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+
+type Props = {
+    params: {
+        slug: any;
+    };
+};
+
+export async function generateMetadata(
+    { params }: Props,
+    parent?: ResolvingMetadata
+): Promise<Metadata> {
+    const jsoncb = await fetchData(`/api/campaign-builder-details/${params.slug}`);
+    const campaignBuilderTitle = jsoncb.data.attributes.campaignBuilderTitle
+    const campaignBuilderContent = jsoncb.data.attributes.campaignBuilderContent
+    const description = campaignBuilderContent.slice(0, 160);
+    return {
+        title: `${campaignBuilderTitle} | Popupsmart`,
+        description: description,
+    };
+}
 
 type CampaignBuilderDetail = {
     id: number;
@@ -31,25 +52,22 @@ export default async function Home({
 }: {
     params: { slug: string };
 }) {
-    const res = await fetch(`http://127.0.0.1:1337/api/campaign-builders?populate=*`);
-    const jsonres: ApiResult = await res.json();
+    const jsonres: ApiResult = await fetchData(`/api/campaign-builders?populate=*`);
     const campaignbuilderData = jsonres.data;
-    const accdata = await fetch(`http://127.0.0.1:1337/api/campaign-builder-details/${params.slug}`);
+    const jsoncb = await fetchData(`/api/campaign-builder-details/${params.slug}`);
 
-    const jsonacc = await accdata.json();
-    const campaignBuilderTitle = jsonacc.data.attributes.campaignBuilderTitle
-    const campaignBuilderContent = jsonacc.data.attributes.campaignBuilderContent
+    const campaignBuilderTitle = jsoncb.data.attributes.campaignBuilderTitle
+    const campaignBuilderContent = jsoncb.data.attributes.campaignBuilderContent
     return (
         <main>
-            <Navbar />
             <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
                 <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
                 <div><Link href="/help" className="hover:underline">Documentation</Link></div>
                 <div><Link href="" className="font-medium hover:underline">{campaignBuilderTitle}</Link></div>
             </div>
             <div className="container mx-auto max-w-screen-xl">
-                <div className="flex flex-col md:flex-row">
-                    <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+                <div className="flex flex-col md:flex-row w-4/5 lg:w-full">
+                    <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
                         <div className="font-bold text-2xl mb-10">
                             <Link href="/help">Categories</Link>
                         </div>
@@ -83,7 +101,7 @@ export default async function Home({
 
 
                     <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-                        <div className="text-center md:text-left">
+                        <div className="text-left">
                             <div className="text-5xl font-extrabold mb-12">{campaignBuilderTitle}</div>
                             <div>
                                 <ReactMarkdown className="markdown-content">{campaignBuilderContent}</ReactMarkdown>

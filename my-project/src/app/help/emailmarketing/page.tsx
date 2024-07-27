@@ -1,8 +1,30 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/help/campaignbuilder/campaignbuilder.scss";
+import "@/app/help/help.scss"
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+
+type Props = {
+  params: {
+    slug: any;
+  };
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const jsonres: ApiResult = await fetchData(`/api/email-marketing-and-crm-integrations?population=*`);
+  const emailmarketingData = jsonres.data;
+  const title = emailmarketingData[0].attributes.EmailCRMTitle
+  const desc = emailmarketingData[0].attributes.EmailCRMContent
+  const description = desc.slice(0, 160);
+  return {
+    title: `${title} | Popupsmart`,
+    description: description,
+  };
+}
 
 type EmailCRMIntegrationDetail = {
   id: number;
@@ -28,23 +50,20 @@ type ApiResult = {
 };
 
 export default async function Home() {
-  const res = await fetch(
-    `http://127.0.0.1:1337/api/email-marketing-and-crm-integrations?populate=*`
-  );
-  const jsonres: ApiResult = await res.json();
+  const jsonres: ApiResult = await fetchData(`/api/email-marketing-and-crm-integrations?populate=*`);
   const emailCRMIntegrationData = jsonres.data;
 
   return (
     <main>
-      <Navbar />
       <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
         <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
         <div><Link href="/help" className="hover:underline">Documentation</Link></div>
         <div><Link href="/help/emailmarketing" className="font-medium hover:underline">E Mail Marketing and CRM Integrations</Link></div>
       </div>
-      <div className="container mx-auto max-w-screen-xl">
+      <div className="container mx-auto max-w-screen-xl md:flex md:justify-center">
+        <h1 className="text-center text-4xl font-bold mb-20 lg:hidden block">Help Center</h1>
         <div className="flex flex-col md:flex-row">
-          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
             <div className="font-bold text-2xl mb-10">
               <Link href="/help">Categories</Link>
             </div>
@@ -78,8 +97,8 @@ export default async function Home() {
             <Link href="/help/targeting"><h1 className="font-semibold text-xl mb-5">Segments & Targeting</h1></Link>
           </div>
 
-          <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-            <div className="text-5xl font-bold mb-12">Email Marketing and CRM Integrations</div>
+          <div className="w-4/5 max-w-5xl mx-auto ml-12">
+            <div className="text-2xl lg:text-5xl font-bold mb-12">Email Marketing and CRM Integrations</div>
             {emailCRMIntegrationData.map((integrationData: EmailCRMIntegrationData) => (
               <div key={integrationData.id} className="ml-5">
                 {integrationData.attributes.email_marketing_and_crm_integrations_details.data.map(

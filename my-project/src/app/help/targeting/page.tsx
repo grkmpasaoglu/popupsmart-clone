@@ -1,7 +1,30 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+import "@/app/help/help.scss"
+
+type Props = {
+  params: {
+    slug: any;
+  };
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const jsonres: ApiResult = await fetchData(`/api/targetings?populate=*`);
+  const helpData = jsonres.data;
+  const title = helpData[0].attributes.targetingTitle
+  const desc = helpData[0].attributes.targetingContent
+  const description = desc.slice(0, 160);
+  return {
+    title: `${title} | Popupsmart`,
+    description: description,
+  };
+}
 
 type TargetingDetail = {
   id: number;
@@ -27,23 +50,23 @@ type ApiResult = {
 };
 
 export default async function Home() {
-  const res = await fetch(
-    `http://127.0.0.1:1337/api/targetings?populate=*`
+  const jsonres: ApiResult = await fetchData(
+    `/api/targetings?populate=*`
   );
-  const jsonres: ApiResult = await res.json();
   const targetingData = jsonres.data;
 
   return (
     <main>
-      <Navbar />
       <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
         <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
         <div><Link href="/help" className="hover:underline">Documentation</Link></div>
         <div><Link href="/help/targeting" className="font-medium hover:underline">Segment & Targeting</Link></div>
       </div>
-      <div className="container mx-auto max-w-screen-xl">
+      <div className="container mx-auto max-w-screen-xl md:flex md:justify-center">
+        <h1 className="text-center text-4xl font-bold mb-20 md:hidden block">Help Center</h1>
+
         <div className="flex flex-col md:flex-row">
-          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
             <div className="font-bold text-2xl mb-10">
               <Link href="/help">Categories</Link>
             </div>
@@ -71,8 +94,8 @@ export default async function Home() {
             ))}
           </div>
 
-          <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-            <div className="text-5xl font-bold mb-12">Segment & Targeting</div>
+          <div className="w-4/5 max-w-5xl mx-auto ml-12">
+            <div className="text-2xl lg:text-5xl font-bold mb-12">Segment & Targeting</div>
             {targetingData[0]?.attributes.targeting_details.data.map(
               (item: TargetingDetail) => (
                 <div key={item.id} className="ml-5">

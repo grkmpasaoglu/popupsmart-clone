@@ -23,6 +23,15 @@
     },
     "images": {
       "type": "json"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "SEO": {
+      "displayName": "SEO",
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.seo"
     }
   }
 }

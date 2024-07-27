@@ -1,8 +1,23 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import "@/app/help/campaignbuilder/campaignbuilder.scss";
+import "@/app/help/help.scss"
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+
+export async function generateMetadata(
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const jsonres: ApiResult = await fetchData(`/api/campaign-builders?populate=*`);
+  const campaignBuilderData = jsonres.data;
+  const title = campaignBuilderData[0].attributes.campaignBuilderTitle
+  const desc = campaignBuilderData[0].attributes.campaignBuilderContent
+  const description = desc.slice(0, 160);
+  return {
+    title: `${title} | Popupsmart`,
+    description: description,
+  };
+}
 
 type CampaignBuilderDetail = {
   id: number;
@@ -28,23 +43,20 @@ type ApiResult = {
 };
 
 export default async function Home() {
-  const res = await fetch(
-    `http://127.0.0.1:1337/api/campaign-builders?populate=*`
-  );
-  const jsonres: ApiResult = await res.json();
+  const jsonres: ApiResult = await fetchData(`/api/campaign-builders?populate=*`);
   const campaignBuilderData = jsonres.data;
 
   return (
     <main>
-      <Navbar />
       <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
         <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
         <div><Link href="/help" className="hover:underline">Documentation</Link></div>
         <div><Link href="/help/campaignbuilder" className="font-medium hover:underline">Campaign Builder</Link></div>
       </div>
-      <div className="container mx-auto max-w-screen-xl">
+      <h1 className="text-center text-4xl font-bold mb-20 lg:hidden block">Help Center</h1>
+      <div className="container mx-auto max-w-screen-xl md:flex md:justify-center">
         <div className="flex flex-col md:flex-row">
-          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
             <div className="font-bold text-2xl mb-10">
               <Link href="/help">Categories</Link>
             </div>
@@ -75,8 +87,8 @@ export default async function Home() {
           </div>
 
 
-          <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-            <div className="text-5xl font-bold mb-12">Campaign Builder</div>
+          <div className="w-4/5 max-w-5xl mx-auto ml-12">
+            <div className="text-2xl lg:text-5xl font-bold mb-12">Campaign Builder</div>
             {campaignBuilderData.map((campaignBuilder: CampaignBuilderData) => (
               <div key={campaignBuilder.id} className="ml-5">
                 {campaignBuilder.attributes.campaign_builder_details.data.map(

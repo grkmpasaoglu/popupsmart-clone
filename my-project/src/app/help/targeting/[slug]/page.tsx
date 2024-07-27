@@ -1,6 +1,22 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+import "@/app/help/help.scss"
+
+export async function generateMetadata(
+  { params }: Props,
+  parent?: ResolvingMetadata
+): Promise<Metadata> {
+  const jsonacc = await fetchData(`/api/targeting-details/${params.slug}`);
+  const accTitle = jsonacc.data.attributes.targetingTitle;
+  const accContent = jsonacc.data.attributes.targetingContent;
+  const description = accContent.slice(0, 160);
+  return {
+    title: `${accTitle} | Popupsmart`,
+    description: description,
+  };
+}
 
 type TargetingDetail = {
   id: number;
@@ -26,38 +42,34 @@ type ApiResult = {
 };
 
 type Props = {
-  params: { helpId: string };
+  params: {
+    slug: string;
+  };
 };
 
-export default async function Home({
-  params,
-}: {
-  params: { helpId: string };
-}) {
-  const res = await fetch(
-    `http://127.0.0.1:1337/api/targetings?populate=*`
+
+
+export default async function Home({ params, }: { params: { slug: string; } }) {
+  const jsonres:ApiResult = await fetchData(
+    `/api/targetings?populate=*`
   );
-  const jsonres: ApiResult = await res.json();
   const targetingData = jsonres.data[0];
 
-  const targetdata = await fetch(
-    `http://127.0.0.1:1337/api/targeting-details/${params.slug}`
+  const jsontargetdata = await fetchData(
+    `/api/targeting-details/${params.slug}`
   );
-  const jsontargetdata = await targetdata.json();
   const targetTitle = jsontargetdata.data.attributes.targetingTitle;
   const targetContent = jsontargetdata.data.attributes.targetingContent;
-
   return (
     <main>
-      <Navbar />
       <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
         <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
         <div><Link href="/help" className="hover:underline">Documentation</Link></div>
         <div><Link href="" className="font-medium hover:underline">{targetTitle}</Link></div>
       </div>
       <div className="container mx-auto max-w-screen-xl">
-        <div className="flex flex-col md:flex-row">
-          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+        <div className="flex flex-col md:flex-row w-4/5 lg:w-full">
+          <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
             <div className="font-bold text-2xl mb-10">
               <Link href="/help">Categories</Link>
             </div>
@@ -81,11 +93,11 @@ export default async function Home({
                 </div>
               )
             )}
-            
+
           </div>
 
           <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-            <div className="text-center md:text-left">
+            <div className="text-left">
               <div className="text-5xl font-extrabold mb-12">
                 <ReactMarkdown className="markdown-heading">
                   {targetTitle}

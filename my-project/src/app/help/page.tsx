@@ -1,5 +1,3 @@
-import react from "react";
-import Navbar from "@/components/navbar";
 import Link from "next/link";
 import fetchData from "@/utils/fetchData";
 
@@ -14,13 +12,13 @@ export default async function HelpPage() {
 
   return (
     <main>
-      <Navbar />
       <div className="text-center">
-        <h1 className="text-7xl font-extrabold">Documentation</h1>
+        <h1 className="lg:text-7xl font-extrabold md:text-5xl sm:text-2xl">Documentation</h1>
       </div>
 
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 px-4 text-black mt-5 justify-items-center max-w-5xl mx-auto ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 text-black mt-5 justify-items-center max-w-5xl mx-auto ">
 
+        {/* ACCOUNT */}
         <div>
           {account.data.map((item: any) => (
             <Link href="help/account" key={item.id}>
@@ -43,10 +41,9 @@ export default async function HelpPage() {
           ))}
         </div>
 
-
+        {/* GETTING STARTED */}
         <div>
           {gettingStarted.data.map((item: any) => (
-            // <Link href={`/help/${item?.id}`} key={item?.id}>
             <Link href="help/gettingstarted" key={item.id}>
               <div className="bg-white h-80 w-80 text-center rounded-sm overflow-hidden drop-shadow-md transition duration-200 hover:shadow-2xl hover:translate-y-[-2px] mt-3">
                 <div>
@@ -67,6 +64,7 @@ export default async function HelpPage() {
           ))}
         </div>
 
+        {/* CAMPAIGN BUILDER */}
         <div>
           {campaignBuilder.data.map((item: any) => (
             <Link href="help/campaignbuilder" key={item.id}>
@@ -89,6 +87,7 @@ export default async function HelpPage() {
           ))}
         </div>
 
+        {/* EMAIL MARKETING AND CRM INTEGRATIONS */}
         <div>
           {emailMarketing.data.map((item: any) => (
             <Link href="help/emailmarketing" key={item.id}>
@@ -111,6 +110,7 @@ export default async function HelpPage() {
           ))}
         </div>
 
+        {/* TARGETING */}
         <div>
           {targeting.data.map((item: any) => (
             <Link href="help/targeting" key={item.id}>
@@ -133,6 +133,7 @@ export default async function HelpPage() {
           ))}
         </div>
 
+        {/* ANALYTICS */}
         <div>
           {analytics.data.map((item: any) => (
             <Link href="help/analytics" key={item.id}>

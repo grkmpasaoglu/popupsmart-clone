@@ -1,7 +1,30 @@
-import Navbar from "@/components/navbar";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { Metadata, ResolvingMetadata } from "next";
+import fetchData from "@/utils/fetchData";
+import "@/app/help/help.scss"
+
+
+type Props = {
+    params: {
+        slug: any;
+    };
+};
+
+export async function generateMetadata(
+    { params }: Props,
+    parent?: ResolvingMetadata
+): Promise<Metadata> {
+    const jsonanalytics = await fetchData(`/api/analytics-details/${params.slug}`);
+    const accTitle = jsonanalytics.data.attributes.analyticsTitle;
+    const accContent = jsonanalytics.data.attributes.analyticsContent;
+    const description = accContent.slice(0, 160);
+    return {
+        title: `${accTitle} | Popupsmart`,
+        description: description,
+    };
+}
 
 type AnalyticsDetail = {
     id: number;
@@ -31,29 +54,23 @@ export default async function Home({
 }: {
     params: { slug: string };
 }) {
-    const res = await fetch(
-        `http://127.0.0.1:1337/api/analytics?populate=*`
-    );
-    const jsonres: ApiResult = await res.json();
+    const jsonres: ApiResult = await fetchData(`/api/analytics?populate=*`);
     const analyticsData = jsonres.data[0];
-
-
-    const analyticsdata = await fetch(`http://127.0.0.1:1337/api/analytics-details/${params.slug}`);
-    const jsonacc = await analyticsdata.json();
-    const analyticsTitle = jsonacc.data.attributes.analyticsTitle
-    const analyticsContent = jsonacc.data.attributes.analyticsContent
+    
+    const jsonanalytics = await fetchData(`/api/analytics-details/${params.slug}`);
+    const analyticsTitle = jsonanalytics.data.attributes.analyticsTitle
+    const analyticsContent = jsonanalytics.data.attributes.analyticsContent
 
     return (
         <main>
-            <Navbar />
             <div className="w-9/12 mx-auto text-xs flex gap-x-4 mb-12">
                 <div><Link href="/" className="hover:underline">Popupsmart</Link></div>
                 <div><Link href="/help" className="hover:underline">Documentation</Link></div>
                 <div><Link href="/help/analytics" className="font-medium hover:underline">{analyticsTitle}</Link></div>
             </div>
             <div className="container mx-auto max-w-screen-xl">
-                <div className="flex flex-col md:flex-row">
-                    <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0">
+                <div className="flex flex-col md:flex-row w-4/5 lg:w-full">
+                    <div className="w-1/5 ml-4 md:ml-20 mt-4 md:mt-0 hidden lg:block">
                         <div className="font-bold text-2xl mb-10">
                             <Link href="/help">Categories</Link>
                         </div>
@@ -81,7 +98,7 @@ export default async function Home({
                     </div>
 
                     <div className="w-full md:w-4/5 max-w-5xl mx-auto ml-12">
-                        <div className="text-center md:text-left">
+                        <div className="text-left">
                             <div className="text-5xl font-extrabold mb-12">{analyticsTitle}</div>
                             <div>
                                 <ReactMarkdown className="markdown-content">{analyticsContent}</ReactMarkdown>
